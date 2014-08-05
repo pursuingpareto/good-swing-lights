@@ -13,3 +13,6 @@ function stop() {
 	window.clearInterval(timeoutId);
 }
 var newId = window.setTimeout(stop, 2000);
+
+var advanceButton = document.getElementById('advance');
+advanceButton.onclick = update;
