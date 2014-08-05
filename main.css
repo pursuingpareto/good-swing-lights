@@ -1,14 +1,12 @@
 body {
     background: black;
 }
-
 #swingset {
     margin: 0 auto;
     width: 100%;
     position: absolute;
     text-align: center;
 }
-
 #chain {
     text-align: center;
     position: relative;
@@ -19,34 +17,31 @@ body {
     transform-origin: center top;
     -webkit-transform-origin: center top;
 }
-
-.light {
+.LED {
     text-align: center;
     border-radius: 2px;
     border-color: rgb(50,50,50);
-    border-width: 1px;
+    border-width: 0;
     border-style: solid;
     margin: 0 auto;
     background-color: rgba(255, 0, 0, 0.5);
     background-color: black;
     background-color: transparent;
-    height: 4px;
-    width: 10px;
+    height: 6px;
+    width: 8px;
     padding: -1px;
     position: relative;
 }
-
 .pole {
     display: inline-block;
     text-align: center;
-    width: 15px;
+    width: 10px;
     position: absolute;
     top: 0px;
     transform-origin: center top;
     -webkit-transform-origin: center top;
     background-color: gray;
 }
-
 #pole-0 {
     -webkit-transform: rotate(30deg);
     -transform: rotate(30deg);
@@ -65,7 +60,6 @@ body {
     -ms-transform: rotate(-30deg);
     -sand-transform: rotate(-30deg);
 }
-
 .seat {
     width: 45px;
     height: 15px;
@@ -74,4 +68,10 @@ body {
     position: relative;
     left: -12px;
     text-align: center;
+}
+.on {
+    opacity: 1;
+}
+.off {
+    opacity: 0;
 }
