@@ -6,15 +6,19 @@ var makeLED = function(containerElement, i) {
 }
 var makeLEDs = function(LightStrip) {
 	var poles = document.getElementsByClassName('pole');
-	console.log(poles.length);
 	var numLEDs = LightStrip.allLeds.length;
-	console.log('numLEDs is ' + String(numLEDs));
 	for (var poleIndex=0; poleIndex<poles.length; poleIndex++){
 		var pole = poles[poleIndex];
-		console.log(pole);
 		for (var i=0; i<numLEDs; i++) {
 			makeLED(pole, i);
 		}
+	}
+}
+var roundRgb = function(rgb){
+	return {
+		r: Math.round(rgb.r),
+		g: Math.round(rgb.g),
+		b: Math.round(rgb.b)
 	}
 }
 var HTMLActuator = function(LightStrip){
@@ -39,7 +43,7 @@ var HTMLActuator = function(LightStrip){
 				// console.log('updating led number:');
 				// console.log(i);
 				// console.log('with rgbColor:');
-				var rgb = led.rgbColor;
+				var rgb = roundRgb(led.rgbColor);
 				// console.log(rgb);
 				var rgbString = 'rgb('+String(rgb.r)+','+String(rgb.g)+','+String(rgb.b)+')';
 				// console.log(rgbString);

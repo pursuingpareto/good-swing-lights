@@ -6,17 +6,17 @@ function Tube(LightStrip) {
 		Drop : function(rgbColor) {
 			var thisDrop = {
 				rgbColor : rgbColor,
-				size : 0.3, // used to calculate brightness on other pixels.
-				position : thisTube.L,
+				size : 0.1, // used to calculate brightness on other pixels.
+				position : 0.0,
 				speed : 2.5, // m/s
-				brightness : 1.0,
+				brightness : 10.0,
 				destroy : function() {
 					var i = thisTube.allDrops.indexOf(thisDrop);
 					thisTube.allDrops.splice(i, 1);
 				},
 				updatePosition : function() {
-					thisDrop.position -= thisDrop.speed * dt;
-					if (thisDrop.position < 0.0) {
+					thisDrop.position += thisDrop.speed * dt;
+					if (thisDrop.position > thisTube.L) {
 						thisDrop.destroy();
 					}
 				}
@@ -25,8 +25,9 @@ function Tube(LightStrip) {
 		},
 		updateDrops : function() {
 			if (thisTube.allDrops.length < 1) {
-				newDrop = thisTube.Drop(randomColor());
+				newDrop = thisTube.Drop({r: 0, g: 255, b: 0});
 				thisTube.allDrops.push(newDrop)
+				console.log('new drop pushed!')
 			} else {
 				for (var i=0; i<thisTube.allDrops.length; i++) {
 					drop = thisTube.allDrops[i];

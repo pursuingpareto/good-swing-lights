@@ -1,5 +1,5 @@
-var dt =0.1; // 40 updates per second
-var ls = LightStrip(1.5, 60.0);
+var dt =0.05; // 40 updates per second
+var ls = LightStrip(4.0, 60.0);
 var tube = Tube(ls);
 var actuator = HTMLActuator(ls);
 actuator.actuate();
@@ -8,11 +8,6 @@ function update() {
 	ls.updateLeds(tube);
 	actuator.update();
 }
-var timeoutId = window.setInterval(update, dt*1000);
-function stop() {
-	window.clearInterval(timeoutId);
-}
-var newId = window.setTimeout(stop, 2000);
 
-var advanceButton = document.getElementById('advance');
-advanceButton.onclick = update;
+var newId = window.setTimeout(stop, 10000);
+

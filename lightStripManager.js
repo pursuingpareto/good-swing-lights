@@ -4,7 +4,7 @@ function LightStrip(L, ledsPerMeter) {
 		L : L,
 		ledsPerMeter : ledsPerMeter,
 		numLeds : Math.round(L * ledsPerMeter),
-		defaultLedColor: {r: 255, g: 0, b: 0},
+		defaultLedColor: {r: 0, g: 0, b: 0},
 		allLeds : [],
 		Led : function(rgbColor) {
 			var thisLed = {
@@ -51,12 +51,12 @@ function LightStrip(L, ledsPerMeter) {
 		},
 		// updateLeds can have one of many functions uncommented.
 		updateLeds : function(tube) {
-			testUpdateTubeWithSingleDrop(tube, thisStrip);
-			//updateTubeWithSingleDrop(tube, thisStrip);
+			//testUpdateTubeWithSingleDrop(tube, thisStrip);
+			updateTubeWithSingleDrop(tube, thisStrip);
 		}
 	}
 	thisStrip.makeLeds();
-	thisStrip.allOff();
+	thisStrip.allOn();
 	return thisStrip;
 }
 
@@ -64,8 +64,22 @@ function LightStrip(L, ledsPerMeter) {
 function normalDistribution(x, mu, sig, metersPerLed) {
 	var c = 1.0 / (sig*Math.sqrt(2 * Math.PI));
 	var exp = -1.0*(Math.pow((x - mu),2) / (2 * Math.pow(sig,2)));
-	return c * Math.pow(Math.E, exp) * metersPerLed; // TODO - this should be an integral, not just f(x) * dx
+	return Math.max(c*Math.pow(Math.E, exp)*metersPerLed, 1.0); // TODO - this should be an integral, not just f(x) * dx
 }
+
+function quadraticDimmer(dropToLEDDistance, dropSize) {
+	return Math.pow((dropToLEDDistance / dropSize), 2);
+}
+function cubicDimmer(dropToLEDDistance, dropSize) {
+	return Math.pow((dropToLEDDistance / dropSize), 3);
+}
+function exponentialDimmer(dropToLEDDistance, dropSize) {
+	return Math.exp(Math.abs(dropToLEDDistance) / dropSize);
+}
+function gaussianDimmer(dropToLEDDistance, dropSize) {
+	return Math.exp(Math.pow(dropToLEDDistance/dropSize, 2));
+}
+
 function addRgbColors(rgb1, rgb2, weight) {
 	return {
 		r: rgb1.r + weight * rgb2.r,
@@ -75,23 +89,26 @@ function addRgbColors(rgb1, rgb2, weight) {
 }
 function normalizeRgb(rgb, totalWeight) {
 	return {
-		r : Math.round(rgb.r / totalWeight),
-		g : Math.round(rgb.g / totalWeight),
-		b : Math.round(rgb.b / totalWeight)
+		r : (rgb.r / totalWeight),
+		g : (rgb.g / totalWeight),
+		b : (rgb.b / totalWeight)
 	}
 }
 function dimRgb(rgb, dimFactor){
 	var dimmed = {
-		r: (rgb.r / dimFactor),
-		g: (rgb.g / dimFactor),
-		b: (rgb.b / dimFactor)
+		r: (rgb.r * dimFactor),
+		g: (rgb.g * dimFactor),
+		b: (rgb.b * dimFactor)
 	}
 	return dimmed;
 }
+function amplifyRgb(rgb, ampFactor){
+	return dimRgb(rgb, 1.0/ampFactor);
+}
 function randomColor() {
 	return {
-		r: Math.round(255*Math.random()),
-		g: Math.round(255*Math.random()),
-		b: Math.round(255*Math.random())
+		r: 255*Math.random(),
+		g: 255*Math.random(),
+		b: 255*Math.random()
 	}
 }
