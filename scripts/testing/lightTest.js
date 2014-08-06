@@ -2,7 +2,7 @@ var dt =0.1; // 10 updates per second
 var ls = LightStrip(1.5, 60.0);
 var tube = Tube(ls);
 function update() {
-	tube.updateDrops();
+	tube.updateDropPositions();
 	ls.updateLeds(tube);
 	console.log('RGB VALUE OF allLeds[2] IS...')
 	console.log(ls.allLeds[60].rgbColor);
