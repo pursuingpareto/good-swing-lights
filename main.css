@@ -27,10 +27,14 @@ body {
     background-color: rgba(255, 0, 0, 0.5);
     background-color: black;
     background-color: transparent;
-    height: 4px;
-    width: 8px;
-    padding: -1px;
+    height: 3px;
+    width: 12px;
+    margin: 1px;
     position: relative;
+}
+.LED-1 {
+    height:3px;
+    margin:5px 0;
 }
 .pole {
     display: inline-block;
@@ -40,7 +44,7 @@ body {
     top: 0px;
     transform-origin: center top;
     -webkit-transform-origin: center top;
-    background-color: gray;
+    background-color: rgb(55,55,55);
 }
 #pole-0 {
     -webkit-transform: rotate(30deg);

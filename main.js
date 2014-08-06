@@ -1,11 +1,17 @@
 var dt =0.05; // 40 updates per second
-var ls = LightStrip(4.0, 60.0);
-var tube = Tube(ls);
-var actuator = HTMLActuator(ls);
+var ls1 = LightStrip(4.0, 60.0);
+var ls2 = LightStrip(4.0, 30.0);
+var tube1 = Tube(ls1);
+var tube2 = Tube(ls2);
+var lightStrips = [ls1, ls2]
+var actuator = HTMLActuator(lightStrips);
 actuator.actuate();
 function update() {
-	tube.updateDrops();
-	ls.updateLeds(tube);
+	tube1.updateDrops();
+	tube2.updateDrops();
+	ls1.updateLeds(tube1);
+	ls2.updateLeds(tube2);
+	console.log(actuator.LightStrips);
 	actuator.update();
 }
 
