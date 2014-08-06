@@ -32,10 +32,12 @@ body {
     margin: 1px;
     position: relative;
 }
+/*
 .LED-1 {
     height:3px;
     margin:5px 0;
 }
+*/
 .pole {
     display: inline-block;
     text-align: center;
