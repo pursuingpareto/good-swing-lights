@@ -8,10 +8,12 @@ var DROP_MODEL = function() {
 	var	dropBrightness	= 1.0;
 	var	halfLife		= 0.2;   // specifies duration of trail
 	var	lightPersistence= 0.1;   // Defines how much an LED considers its previous color when updating color.
-	var colorPalette    = palettes.cheerUp;
+	var maxRgbValue     = 255;   // maybe you could change this based on swing speed?
+	var colorPalette    = palettes.flouresceMe;
 	// calculated drop properties
 	var	dropProbability = dropsPerSecond * dt; // TODO - SHOULDN'T BE HARD CODED
 	var	dimFactor 		= Math.exp(((Math.log(0.5) * dt) / halfLife));
+	var framesPerDrop   = Math.round(fps / dropsPerSecond);
 
 	var thisModel = {
 		// A Drop is a single light entity (NOT a single LED)
@@ -47,11 +49,15 @@ var DROP_MODEL = function() {
 					for (var i=0; i<thisTube.allDrops.length; i++) {
 						drop = thisTube.allDrops[i];
 						drop.updatePosition();
-						}
-					if (Math.random() < dropProbability) {
-						newDrop = thisModel.Drop(getColorFromPalette(colorPalette), thisTube);
+					}
+					if (COUNTER % framesPerDrop < 1) {
+						newDrop = thisModel.Drop(randomBrightColor(maxRgbValue), thisTube);
 						thisTube.allDrops.push(newDrop)
 					}
+					// if (Math.random() < dropProbability) {
+					// 	newDrop = thisModel.Drop(getColorFromPalette(colorPalette), thisTube);
+					// 	thisTube.allDrops.push(newDrop)
+					// }
 				}
 			}
 			return thisTube;

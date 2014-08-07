@@ -12,8 +12,11 @@ body {
     position: relative;
     left: 5px;
     margin: 0 auto;
-    width: 20px;
+    width: 4px;
     display: block;
+    height: 500px;
+    z-index: -1;
+    background-color: rgb(80,80,80);
     transform-origin: center top;
     -webkit-transform-origin: center top;
 }
@@ -27,7 +30,7 @@ body {
     background-color: rgba(255, 0, 0, 0.5);
     background-color: black;
     background-color: transparent;
-    height: 3px;
+    height: 2px;
     width: 12px;
     margin: 1px;
     position: relative;
@@ -66,10 +69,10 @@ body {
     -ms-transform: rotate(-30deg);
     -sand-transform: rotate(-30deg);
 }
-.seat {
+#seat {
     width: 45px;
     height: 15px;
-    background: gray;
+    background: rgb(80,80,80);
     display: inline-block;
     position: relative;
     left: -12px;

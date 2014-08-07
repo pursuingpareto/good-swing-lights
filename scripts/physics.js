@@ -1,12 +1,12 @@
 var g = 9.8;
-var fps = 30.0;
-var dt = 1000.0 / fps;
 var toRadians = function(angle) {
 	return angle * Math.PI / 180.0;
 }
-
+var toDegrees = function(angle) {
+	return angle * 180.0 / Math.PI;
+}
 function Swing(L) {
-	this.theta = 0.0,
+	this.theta = 60.0,
 	this.omega = 0.0,
 	this.alpha = 0.0,
 	this.PE    = 0.0,
@@ -16,13 +16,13 @@ function Swing(L) {
 	this.L     = L
 }
 Swing.prototype.calcTheta = function() {
-	return this.omega + this.omega * dt;
+	return this.theta + this.omega * dt;
 }
 Swing.prototype.calcOmega = function() {
-	return this.omega + this.alpha * dt;
+	return this.omega + (this.alpha * dt);
 }
 Swing.prototype.calcAlpha = function() {
-	return -g * Math.sin(toRadians(this.theta)) / this.L;
+	return toDegrees(-g * Math.sin(toRadians(this.theta)) / Math.pow(this.L, 2));
 }
 Swing.prototype.calcPE = function() {
 	return this.mass * g * this.h();
@@ -38,6 +38,14 @@ Swing.prototype.h = function() {
 }
 Swing.prototype.v = function() {
 	return this.omega * this.L;
+}
+Swing.prototype.updatePhysics = function() {
+	this.alpha = this.calcAlpha();
+	this.omega = this.calcOmega();
+	this.theta = this.calcTheta();
+	this.PE    = this.calcPE();
+	this.KE    = this.calcKE();
+	this.TE    = this.calcTE();
 }
 
 // TESTING BELOW

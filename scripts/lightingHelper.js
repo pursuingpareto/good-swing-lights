@@ -44,6 +44,14 @@ function randomColor() {
 		b: 255*Math.random()
 	}
 }
+function randomBrightColor(specMax) {
+	return brightenColorToSpecifiedMax(randomColor(), specMax);
+}
 function getColorFromPalette(palette) {
 	return palette[Math.floor(Math.random()*palette.length)];
+}
+function brightenColorToSpecifiedMax(C, specMax){
+	var maximum = Math.max(C.r, C.g, C.b)
+	var m = specMax / maximum;
+	return {r: C.r*m, g: C.g*m, b: C.b*m}
 }

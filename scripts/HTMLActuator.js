@@ -1,5 +1,6 @@
-var fps = 30;
-var dt = 1.0 / 30.0;
+var fps = 20.0;
+var dt = 1.0 / fps;
+var COUNTER = 0;
 
 var makeLED = function(containerElement, i, poleIndex) {
 	var newLight = document.createElement("div");
@@ -25,12 +26,23 @@ var roundRgb = function(rgb){
 		b: Math.round(rgb.b)
 	}
 }
-var HTMLActuator = function(LightStrip){
+var setSwing = function(Swing) {
+	var chain = document.getElementById('chain');
+		var theta = Swing.theta;
+		chain.style.webkitTransform = 'rotate('+theta+'deg)';
+		chain.style.webkitTransform = 'rotate('+theta+'deg)';
+	    chain.style.mozTransform    = 'rotate('+theta+'deg)';
+	    chain.style.msTransform     = 'rotate('+theta+'deg)';
+	    chain.style.oTransform      = 'rotate('+theta+'deg)';
+	    chain.style.transform       = 'rotate('+theta+'deg)';
+}
+var HTMLActuator = function(LightStrip, Swing){
 	var thisActuator = {
 		actuate : function() {
 			makeLEDs(LightStrip);
+			setSwing(Swing)
 		},
-		update : function(LightStrip) {
+		update : function(LightStrip, Swing) {
 			var pole = document.getElementById('pole-0')
 			var lights = pole.getElementsByClassName('LED');
 			for (var i=0; i<lights.length; i++) {
@@ -51,6 +63,14 @@ var HTMLActuator = function(LightStrip){
 					lightElement.style.backgroundColor = rgbString;
 				}
 			}
+			var chain = document.getElementById('chain');
+			var theta = Swing.theta;
+			chain.style.webkitTransform = 'rotate('+theta+'deg)';
+			chain.style.webkitTransform = 'rotate('+theta+'deg)';
+		    chain.style.mozTransform    = 'rotate('+theta+'deg)';
+		    chain.style.msTransform     = 'rotate('+theta+'deg)';
+		    chain.style.oTransform      = 'rotate('+theta+'deg)';
+		    chain.style.transform       = 'rotate('+theta+'deg)';
 		}
 	}
 	return thisActuator;
