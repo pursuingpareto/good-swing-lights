@@ -11,10 +11,13 @@ var DROP_MODEL = function() {
 	var maxRgbValue     = 255;   // maybe you could change this based on swing speed?
 	var colorPalette    = palettes.flouresceMe;
 	// calculated drop properties
-	var	dropProbability = dropsPerSecond * dt; // TODO - SHOULDN'T BE HARD CODED
+	// var	dropProbability = dropsPerSecond * dt;
 	var	dimFactor 		= Math.exp(((Math.log(0.5) * dt) / halfLife));
 	var framesPerDrop   = Math.round(fps / dropsPerSecond);
-
+	var getDropProbability = function() {
+		var dropsPerSecond = Math.abs(SWING.theta / 3.0);
+		return dropsPerSecond * dt;
+	}
 	var thisModel = {
 		// A Drop is a single light entity (NOT a single LED)
 		// which travels down the A-frame poles.
@@ -50,14 +53,16 @@ var DROP_MODEL = function() {
 						drop = thisTube.allDrops[i];
 						drop.updatePosition();
 					}
-					if (COUNTER % framesPerDrop < 1) {
-						newDrop = thisModel.Drop(randomBrightColor(maxRgbValue), thisTube);
-						thisTube.allDrops.push(newDrop)
-					}
-					// if (Math.random() < dropProbability) {
-					// 	newDrop = thisModel.Drop(getColorFromPalette(colorPalette), thisTube);
+					dropProbability = getDropProbability();
+					// if (COUNTER % framesPerDrop < 1) {
+					// 	newDrop = thisModel.Drop(randomBrightColor(maxRgbValue), thisTube);
 					// 	thisTube.allDrops.push(newDrop)
 					// }
+
+					if (Math.random() < dropProbability) {
+						newDrop = thisModel.Drop(getColorFromPalette(colorPalette), thisTube);
+						thisTube.allDrops.push(newDrop)
+					}
 				}
 			}
 			return thisTube;
@@ -65,7 +70,7 @@ var DROP_MODEL = function() {
 		// Mandatory function for all lightingModels. This takes
 		// the model's current lighting state and converts it to
 		// RGB values for each LED in the lightstrip.
-		updateLightingModel : function(tube, LightStrip) {
+		updateLightingModel : function(tube, LightStrip, Swing) {
 			thisStrip = LightStrip;
 			var led, ledPosition, totalWeight, ledColor;
 
@@ -91,6 +96,7 @@ var DROP_MODEL = function() {
 	}
 	return thisModel
 }
+
 
 
 
