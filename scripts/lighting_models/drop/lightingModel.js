@@ -14,8 +14,12 @@ var DROP_MODEL = function() {
 	// var	dropProbability = dropsPerSecond * dt;
 	var	dimFactor 		= Math.exp(((Math.log(0.5) * dt) / halfLife));
 	var framesPerDrop   = Math.round(fps / dropsPerSecond);
+	// var getDropProbability = function() {
+	// 	var dropsPerSecond = Math.abs(toDegrees(SWING.theta) / 3.0);
+	// 	return dropsPerSecond * dt;
+	// }
 	var getDropProbability = function() {
-		var dropsPerSecond = Math.abs(toDegrees(SWING.theta) / 3.0);
+		var dropsPerSecond = 250 * Math.pow(SWING.calcKE() / SWING.maxEnergy, 2);
 		return dropsPerSecond * dt;
 	}
 	var thisModel = {

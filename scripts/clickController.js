@@ -24,3 +24,7 @@ playPauseButton.onclick = (function() {
 	} else {
 		PAUSED = true}
 })
+var swingButton = document.getElementById('SWING');
+swingButton.onclick = function() {
+	SWING.TE += SWING.energyIncrementPerSwing;
+}
