@@ -7,4 +7,4 @@ good-swing-lights
  3. Make new patterns
 
 ## Contributing
-In order to make cool patterns, I've abstracted out the idea of individual LEDs. When programming a new pattern, you should create a new directory in the **lighting_models** directory.
+When programming a new lighting model, you should create a new directory in the **lighting_models** directory. Take a look at the current "Drop" model (and main.js) to get a feel for what your model needs to have.
