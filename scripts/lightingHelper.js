@@ -44,3 +44,6 @@ function randomColor() {
 		b: 255*Math.random()
 	}
 }
+function getColorFromPalette(palette) {
+	return palette[Math.floor(Math.random()*palette.length)];
+}

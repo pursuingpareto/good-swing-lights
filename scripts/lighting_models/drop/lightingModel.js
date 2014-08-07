@@ -8,7 +8,7 @@ var DROP_MODEL = function() {
 	var	dropBrightness	= 1.0;
 	var	halfLife		= 0.2;   // specifies duration of trail
 	var	lightPersistence= 0.1;   // Defines how much an LED considers its previous color when updating color.
-
+	var colorPalette    = palettes.cheerUp;
 	// calculated drop properties
 	var	dropProbability = dropsPerSecond * dt; // TODO - SHOULDN'T BE HARD CODED
 	var	dimFactor 		= Math.exp(((Math.log(0.5) * dt) / halfLife));
@@ -49,7 +49,7 @@ var DROP_MODEL = function() {
 						drop.updatePosition();
 						}
 					if (Math.random() < dropProbability) {
-						newDrop = thisModel.Drop(randomColor(), thisTube);
+						newDrop = thisModel.Drop(getColorFromPalette(colorPalette), thisTube);
 						thisTube.allDrops.push(newDrop)
 					}
 				}
