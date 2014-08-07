@@ -13,4 +13,3 @@ function update() {
 }
 
 var newId = window.setTimeout(stop, 10000);
-

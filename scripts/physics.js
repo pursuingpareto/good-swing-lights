@@ -6,23 +6,26 @@ var toDegrees = function(angle) {
 	return angle * 180.0 / Math.PI;
 }
 function Swing(L) {
-	this.theta = 60.0,
+	this.theta = toRadians(60.0),
 	this.omega = 0.0,
 	this.alpha = 0.0,
 	this.PE    = 0.0,
 	this.KE    = 0.0,
 	this.TE    = 0.0,
 	this.mass  = 1.0,
-	this.L     = L
+	this.L     = L,
+	this.maxTheta   = toRadians(80.0),
+	this.maxHeight  = this.L * (1 - Math.cos(this.maxTheta)),
+	this.maxEnergy  = this.maxHeight * g * this.mass
 }
 Swing.prototype.calcTheta = function() {
 	return this.theta + this.omega * dt;
 }
 Swing.prototype.calcOmega = function() {
-	return this.omega + (this.alpha * dt);
+	return this.omega + this.alpha * dt;
 }
 Swing.prototype.calcAlpha = function() {
-	return toDegrees(-g * Math.sin(toRadians(this.theta)) / Math.pow(this.L, 2));
+	return -g * Math.sin(this.theta) / Math.pow(this.L, 2);
 }
 Swing.prototype.calcPE = function() {
 	return this.mass * g * this.h();
@@ -31,7 +34,7 @@ Swing.prototype.calcKE = function() {
 	return 0.5 * this.mass * Math.pow(this.v(), 2);
 }
 Swing.prototype.calcTE = function() {
-	return this.calcPE + this.calcKE;
+	return this.calcPE() + this.calcKE();
 }
 Swing.prototype.h = function() {
 	return this.L * (1 - Math.cos(toRadians(this.theta)));
@@ -46,6 +49,10 @@ Swing.prototype.updatePhysics = function() {
 	this.PE    = this.calcPE();
 	this.KE    = this.calcKE();
 	this.TE    = this.calcTE();
+}
+Swing.prototype.getOmegaFromTE = function() {
+	var KE = this.TE - this.calcPE();
+	return Math.pow((2*KE) / (this.mass * L*L),0.5);
 }
 
 // TESTING BELOW

@@ -28,7 +28,7 @@ var roundRgb = function(rgb){
 }
 var setSwing = function(Swing) {
 	var chain = document.getElementById('chain');
-		var theta = Swing.theta;
+		var theta = toDegrees(Swing.theta);
 		chain.style.webkitTransform = 'rotate('+theta+'deg)';
 		chain.style.webkitTransform = 'rotate('+theta+'deg)';
 	    chain.style.mozTransform    = 'rotate('+theta+'deg)';
@@ -64,7 +64,7 @@ var HTMLActuator = function(LightStrip, Swing){
 				}
 			}
 			var chain = document.getElementById('chain');
-			var theta = Swing.theta;
+			var theta = toDegrees(Swing.theta);
 			chain.style.webkitTransform = 'rotate('+theta+'deg)';
 			chain.style.webkitTransform = 'rotate('+theta+'deg)';
 		    chain.style.mozTransform    = 'rotate('+theta+'deg)';
