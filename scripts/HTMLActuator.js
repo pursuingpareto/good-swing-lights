@@ -29,6 +29,7 @@ var roundRgb = function(rgb){
 var setSwing = function(Swing) {
 	var chain = document.getElementById('chain');
 		var theta = toDegrees(Swing.theta);
+
 		chain.style.webkitTransform = 'rotate('+theta+'deg)';
 		chain.style.webkitTransform = 'rotate('+theta+'deg)';
 	    chain.style.mozTransform    = 'rotate('+theta+'deg)';
@@ -40,7 +41,7 @@ var HTMLActuator = function(LightStrip, Swing){
 	var thisActuator = {
 		actuate : function() {
 			makeLEDs(LightStrip);
-			setSwing(Swing)
+			setSwing(Swing);
 		},
 		update : function(LightStrip, Swing) {
 			var pole = document.getElementById('pole-0')
