@@ -5,9 +5,14 @@ var DROP_MODEL = function() {
 	var	dropSize		= 0.03;  // in meters
 	var	dropPosition 	= 0.0;   // drop starts at top of tube
 	var	dropSpeed		= 1.5;   // meters / second
+	var maxSpeed		= 4.0;
+	var minSpeed		= 0.25;
 	var	dropBrightness	= 1.0;
-	var	halfLife		= 0.2;   // specifies duration of trail
-	var	lightPersistence= 0.1;   // Defines how much an LED considers its previous color when updating color.
+	var minBright 		= 0.2;
+	var maxBright		= 1.0;
+	var	halfLife		= 0.3;   // specifies duration of trail
+	var	lightPersistence= 0.1;
+	var minMaxRgbValue  = 100;  // Defines how much an LED considers its previous color when updating color.
 	var maxRgbValue     = 255;   // maybe you could change this based on swing speed?
 	var colorPalette    = palettes.flouresceMe;
 	// calculated drop properties
@@ -19,7 +24,7 @@ var DROP_MODEL = function() {
 	// 	return dropsPerSecond * dt;
 	// }
 	var getDropProbability = function() {
-		var dropsPerSecond = 250 * Math.pow(SWING.calcKE() / SWING.maxEnergy, 2);
+		var dropsPerSecond = 0.5 + 50 * Math.pow(SWING.KE/ SWING.maxEnergy, 1);
 		return dropsPerSecond * dt;
 	}
 	var thisModel = {
@@ -41,6 +46,12 @@ var DROP_MODEL = function() {
 					if (thisDrop.position > Tube.L) {
 						thisDrop.destroy();
 					}
+				},
+				setPropertiesFromPhysics : function() {
+					thisDrop.speed = minSpeed + (maxSpeed - minSpeed)*Math.pow((SWING.KE + SWING.TE) / (2*SWING.maxEnergy), 1);
+					thisDrop.brightness = minBright + (maxBright - minBright) *Math.pow(SWING.TE / SWING.maxEnergy, 2);
+					var colorMax = minMaxRgbValue + (maxRgbValue - minMaxRgbValue) * Math.pow(SWING.TE / SWING.maxEnergy, 0.25);
+					thisDrop.rgbColor = brightenColorToSpecifiedMax(this.rgbColor, colorMax);
 				}
 			}
 			return thisDrop;
@@ -65,6 +76,7 @@ var DROP_MODEL = function() {
 
 					if (Math.random() < dropProbability) {
 						newDrop = thisModel.Drop(getColorFromPalette(colorPalette), thisTube);
+						newDrop.setPropertiesFromPhysics();
 						thisTube.allDrops.push(newDrop)
 					}
 				}

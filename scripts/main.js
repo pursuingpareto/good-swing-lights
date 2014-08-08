@@ -12,4 +12,4 @@ function update() {
 	COUNTER += 1;
 }
 
-var newId = window.setTimeout(stop, 10000);
+timeoutID = window.setInterval(update, dt*1000)

@@ -6,7 +6,7 @@ var toDegrees = function(angle) {
 	return angle * 180.0 / Math.PI;
 }
 function Swing(L) {
-	this.theta = toRadians(60.0),
+	this.theta = toRadians(0.0),
 	this.omega = 0.0,
 	this.alpha = 0.0,
 	this.PE    = 0.0,
@@ -16,8 +16,12 @@ function Swing(L) {
 	this.L     = L,
 	this.maxTheta   = toRadians(80.0),
 	this.maxHeight  = this.L * (1 - Math.cos(this.maxTheta)),
-	this.maxEnergy  = this.maxHeight * g * this.mass
+	this.maxEnergy  = this.maxHeight * g * this.mass,
+	this.energyIncrementPerSwing = this.maxEnergy / 100.0,
+	this.swingHalfLife = 5.0, //seconds
+	this.energyLossFactor =Math.exp(((Math.log(0.5) * dt) / this.swingHalfLife))
 }
+
 Swing.prototype.calcTheta = function() {
 	return this.theta + this.omega * dt;
 }
@@ -36,23 +40,27 @@ Swing.prototype.calcKE = function() {
 Swing.prototype.calcTE = function() {
 	return this.calcPE() + this.calcKE();
 }
+
 Swing.prototype.h = function() {
-	return this.L * (1 - Math.cos(toRadians(this.theta)));
+	return this.L * (1 - Math.cos(this.theta));
 }
 Swing.prototype.v = function() {
 	return this.omega * this.L;
 }
 Swing.prototype.updatePhysics = function() {
+	// TODO ADD DAMPING
+	this.KE = this.KE * this.energyLossFactor;
 	this.alpha = this.calcAlpha();
-	this.omega = this.calcOmega();
+	this.omega = this.getOmegaFromKE() + this.alpha * dt;
 	this.theta = this.calcTheta();
 	this.PE    = this.calcPE();
 	this.KE    = this.calcKE();
-	this.TE    = this.calcTE();
+	this.TE    = this.KE + this.PE;
 }
-Swing.prototype.getOmegaFromTE = function() {
-	var KE = this.TE - this.calcPE();
-	return Math.pow((2*KE) / (this.mass * L*L),0.5);
+Swing.prototype.getOmegaFromKE = function() {
+	var KE = this.KE;
+	var signOmega = (this.omega > 0) ? 1.0 : -1.0;
+	return signOmega * Math.pow((2*KE) / (this.mass * this.L*this.L),0.5);
 }
 
 // TESTING BELOW
