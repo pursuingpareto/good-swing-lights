@@ -6,14 +6,14 @@ var toDegrees = function(angle) {
 	return angle * 180.0 / Math.PI;
 }
 function Swing(L) {
-	this.theta = toRadians(5.0),
-	this.omega = 0.0,
+	this.L     = L,
+	this.mass  = 1.0,
+	this.theta = toRadians(6.0*(Math.random()-0.5)),
+	this.omega = (Math.random()-0.5)/10.0,
 	this.alpha = this.calcAlpha(),
 	this.PE    = this.calcPE(),
-	this.KE    = 0.0,
+	this.KE    = this.calcKE(),
 	this.TE    = this.PE + this.KE,
-	this.mass  = 1.0,
-	this.L     = L,
 	this.maxTheta   = toRadians(80.0),
 	this.maxHeight  = this.L * (1 - Math.cos(this.maxTheta)),
 	this.maxEnergy  = this.maxHeight * g * this.mass,
