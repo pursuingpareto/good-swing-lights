@@ -1,4 +1,4 @@
-var fps = 30.0;
+var fps = 20.0;
 var dt = 1.0 / fps;
 var COUNTER = 0;
 
