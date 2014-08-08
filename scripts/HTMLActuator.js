@@ -43,7 +43,7 @@ var HTMLActuator = function(LightStrip, Swing){
 			makeLEDs(LightStrip);
 			setSwing(Swing);
 		},
-		update : function(LightStrip, Swing) {
+		updateLightStrip : function(){
 			var pole = document.getElementById('pole-0')
 			var lights = pole.getElementsByClassName('LED');
 			for (var i=0; i<lights.length; i++) {
@@ -64,6 +64,8 @@ var HTMLActuator = function(LightStrip, Swing){
 					lightElement.style.backgroundColor = rgbString;
 				}
 			}
+		},
+		updateSwing : function() {
 			var chain = document.getElementById('chain');
 			var theta = toDegrees(Swing.theta);
 			chain.style.webkitTransform = 'rotate('+theta+'deg)';
@@ -72,6 +74,10 @@ var HTMLActuator = function(LightStrip, Swing){
 		    chain.style.msTransform     = 'rotate('+theta+'deg)';
 		    chain.style.oTransform      = 'rotate('+theta+'deg)';
 		    chain.style.transform       = 'rotate('+theta+'deg)';
+		},
+		update : function(LightStrip, Swing) {
+			thisActuator.updateLightStrip();
+			thisActuator.updateSwing();
 		}
 	}
 	return thisActuator;
