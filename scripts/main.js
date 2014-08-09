@@ -1,3 +1,4 @@
+var STATIC_PATTERN_ACTIVE = false;
 var model = new DROP_MODEL()
 var ls = LightStrip(4.0, 60.0);
 var tube = model.Tube(ls);
